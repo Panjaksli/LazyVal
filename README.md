@@ -15,6 +15,5 @@ std::cout << t[4];
 // Evaluate the whole vector, use this if you need to cache/get all the results.
 std::vector<float> v = t;
 ```
-## Two versions
-By default lazyval.h contains operators implemented as structs with static methods op, this should result in most optimization.  
-Alternatively lazyval_c.h is implemented using callable objects, meaning you can pass lambdas directly into maps and constructors of Expr.
+## Requirements
+Needs C++20, because of the single concept that is used to make vector assignments work... If you are having issues, please remove the concept NotInit from conversion operators and replace simply with typename.
