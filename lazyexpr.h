@@ -79,7 +79,7 @@ namespace Lazy {
 		inline unsigned int size() const {
 			return std::min(std::min(size_wrapper(fst), size_wrapper(snd)), size_wrapper(thd));
 		}
-		template <class Tres>
+		template <NotInit Tres>
 		inline operator Tres() const {
 			unsigned int sz = size() == -1 ? 1 : size();
 			auto res = Tres(sz);
