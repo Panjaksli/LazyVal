@@ -1,7 +1,6 @@
 # LazyVal
 Single header lazy evaluation interface for vector type classes in C++
 ## What this does ?
-This allows you to:
 1) Do straightforward arithmetic operations with vector types (class only needs size() and operator[]) using operator overloading (+,-,*,/)
 2) Lazy evaluate only the needed results (no internal caching). Other than that, you can chain expresssions to your liking, without any additional runtime cost !
 Here is example of what you can do:
