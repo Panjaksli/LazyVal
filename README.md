@@ -5,6 +5,7 @@ Single header lazy evaluation interface for vector type classes in C++
 2) Lazy evaluate only the needed results (no internal caching). Other than that, you can chain expresssions to your liking, without any additional runtime cost !
 Here is example of what you can do:
 ```cpp
+#include "lazyval.h"
 using namespace Lazy;
 auto a = std::vector<float>(48, 6);
 // Create templated symbolic expression tree
