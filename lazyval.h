@@ -85,6 +85,9 @@ namespace Lazy {
 	concept NotInit = !std::is_same_v<T, std::initializer_list<typename T::value_type>>;
 
 	template <class T1, class Op>
+	struct UnExpr;
+
+	template <class T1, class Op>
 	struct UnExpr {
 		const T1 fst;
 		static constexpr bool Scal1 = std::is_scalar_v<typename std::remove_reference<T1>::type>;
@@ -165,6 +168,10 @@ namespace Lazy {
 	inline auto operator-(U1&& a) {
 		return UnExpr<U1, OpNeg>(std::forward<U1>(a));
 	}
+	template<class U1, class UnOp>
+	inline auto map(U1&& a) {
+		return UnExpr<U1, UnOp>(std::forward<U1>(a));
+	}
 	template<class U1>
 	inline auto sqrt(U1&& a) {
 		return UnExpr<U1, OpSqrt>(std::forward<U1>(a));
@@ -188,6 +195,10 @@ namespace Lazy {
 	template<class U1>
 	inline auto log10(U1&& a) {
 		return UnExpr<U1, OpLog10>(std::forward<U1>(a));
+	}
+	template<class U1, class U2, class Op>
+	inline auto map(U1&& a, U2&& b) {
+		return BinExpr<U1, U2, Op>(std::forward<U1>(a), std::forward<U2>(b));
 	}
 	template<class U1, class U2>
 	inline auto operator+(U1&& a, U2&& b) {
