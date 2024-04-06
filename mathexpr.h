@@ -91,6 +91,20 @@ struct UnExpr {
 		}
 		else return fst.size();
 	}
+	template <typename Tres>
+	inline operator Tres() {
+		unsigned int sz = size();
+		if constexpr(std::is_scalar<T1>::value) {
+			return operator[](0);
+		}
+		else {
+			auto res = Tres(sz);
+			for(unsigned int i = 0; i < sz; i++) {
+				res[i] = operator[](i);
+			}
+			return res;
+		}
+	}
 	auto operator[](int i)const {
 		if constexpr(std::is_scalar<T1>::value) {
 			return Op::op(fst);
@@ -118,12 +132,20 @@ struct BinExpr {
 	}
 	template <typename Tres>
 	inline operator Tres() {
-		unsigned int sz = size();
-		auto res = Tres(sz);
-		for(unsigned int i = 0; i < sz; i++) {
-			res[i] = operator[](i);
+		template <typename Tres>
+		inline operator Tres() {
+			unsigned int sz = size();
+			if constexpr(std::is_scalar<T1>::value && std::is_scalar<T2>::value) {
+				return operator[](0);
+			}
+			else {
+				auto res = Tres(sz);
+				for(unsigned int i = 0; i < sz; i++) {
+					res[i] = operator[](i);
+				}
+				return res;
+			}
 		}
-		return res;
 	}
 	auto operator[](unsigned int i)const {
 		if constexpr(std::is_scalar<T1>::value && std::is_scalar<T2>::value) {
