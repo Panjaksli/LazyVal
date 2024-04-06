@@ -1,7 +1,7 @@
 #pragma once
 #include <type_traits>
 #include <cmath>
-namespace Laze {
+namespace Lazy {
 	struct OpMul {
 		template <typename T1, typename T2>
 		static auto op(const T1& e1, const T2& e2) {
