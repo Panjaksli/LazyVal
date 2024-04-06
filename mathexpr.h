@@ -128,25 +128,24 @@ struct BinExpr {
 		else if constexpr(std::is_scalar<T2>::value) {
 			return fst.size();
 		}
-		else return std::min(fst.size(), snd.size());
+		else return min(fst.size(), snd.size());
 	}
+
 	template <typename Tres>
 	inline operator Tres() {
-		template <typename Tres>
-		inline operator Tres() {
-			unsigned int sz = size();
-			if constexpr(std::is_scalar<T1>::value && std::is_scalar<T2>::value) {
-				return operator[](0);
+		unsigned int sz = size();
+		if constexpr(std::is_scalar<T1>::value && std::is_scalar<T2>::value) {
+			return operator[](0);
+		}
+		else {
+			auto res = Tres(sz);
+			for(unsigned int i = 0; i < sz; i++) {
+				res[i] = operator[](i);
 			}
-			else {
-				auto res = Tres(sz);
-				for(unsigned int i = 0; i < sz; i++) {
-					res[i] = operator[](i);
-				}
-				return res;
-			}
+			return res;
 		}
 	}
+
 	auto operator[](unsigned int i)const {
 		if constexpr(std::is_scalar<T1>::value && std::is_scalar<T2>::value) {
 			return Op::op(fst, snd);
@@ -158,6 +157,9 @@ struct BinExpr {
 			return Op::op(fst[i], snd);
 		}
 		else return Op::op(fst[i], snd[i]);
+	}
+	static unsigned int min(unsigned int x, unsigned int y) {
+		return x < y ? x : y;
 	}
 };
 
