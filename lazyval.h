@@ -88,7 +88,7 @@ namespace Lazy {
 	struct UnExpr {
 		const T1 fst;
 		UnExpr(T1&& fst) : fst(std::forward<T1>(fst)) {}
-		unsigned int size() const {
+		inline unsigned int size() const {
 			if constexpr(std::is_scalar<T1>::value) {
 				return -1;
 			}
@@ -103,7 +103,7 @@ namespace Lazy {
 			}
 			return res;
 		}
-		auto operator[](unsigned int i)const {
+		inline auto operator[](unsigned int i)const {
 			if constexpr(std::is_scalar<T1>::value) {
 				return Op::op(fst);
 			}
@@ -116,7 +116,7 @@ namespace Lazy {
 		const T1 fst;
 		const T2 snd;
 		BinExpr(T1&& fst, T2&& snd) : fst(std::forward<T1>(fst)), snd(std::forward<T2>(snd)) {}
-		unsigned int size() const {
+		inline unsigned int size() const {
 			if constexpr(std::is_scalar<T1>::value && std::is_scalar<T2>::value) {
 				return -1;
 			}
@@ -140,7 +140,7 @@ namespace Lazy {
 			return res;
 		}
 
-		auto operator[](unsigned int i)const {
+		inline auto operator[](unsigned int i)const {
 			if constexpr(std::is_scalar<T1>::value && std::is_scalar<T2>::value) {
 				return Op::op(fst, snd);
 			}
