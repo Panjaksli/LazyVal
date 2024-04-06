@@ -81,6 +81,9 @@ namespace Lazy {
 		}
 	};
 
+	template<typename T>
+	concept NotInit = !std::is_same_v<T, std::initializer_list<typename T::value_type>>;
+
 	template <class T1, class Op>
 	struct UnExpr {
 		const T1 fst;
@@ -91,9 +94,9 @@ namespace Lazy {
 			}
 			else return fst.size();
 		}
-		template <typename Tres>
-		inline operator Tres() {
-			unsigned int sz = size()  == unsigned int(-1) ? 1 : size();
+		template <NotInit Tres>
+		inline operator Tres() const {
+			unsigned int sz = size() == -1 ? 1 : size();
 			auto res = Tres(sz);
 			for(unsigned int i = 0; i < sz; i++) {
 				res[i] = operator[](i);
@@ -126,9 +129,10 @@ namespace Lazy {
 			else return min(fst.size(), snd.size());
 		}
 
-		template <typename Tres>
-		inline operator Tres() {
-			unsigned int sz = size() == unsigned int(-1) ? 1 : size();
+		template <NotInit Tres>
+		inline operator Tres() const {
+
+			unsigned int sz = size() == -1 ? 1 : size();
 			auto res = Tres(sz);
 			for(unsigned int i = 0; i < sz; i++) {
 				res[i] = operator[](i);
