@@ -16,5 +16,5 @@ std::cout << t[4];
 std::vector<float> v = t;
 ```
 ## Two versions
-By default lazyval.h contains operators implemented as structs with static methods op, this should result in most optimization
-Alternatively lazyval_c.h is implemented using callable objects -> meaning, you can pass lambdas into maps and constructors of Expr.
+By default lazyval.h contains operators implemented as structs with static methods op, this should result in most optimization.  
+Alternatively lazyval_c.h is implemented using callable objects, meaning you can pass lambdas directly into maps and constructors of Expr.
