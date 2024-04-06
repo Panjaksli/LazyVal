@@ -87,9 +87,11 @@ namespace Lazy {
 	template <class T1, class Op>
 	struct UnExpr {
 		const T1 fst;
+		static constexpr bool Scal1 = std::is_scalar_v<typename std::remove_reference<T1>::type>;
+
 		UnExpr(T1&& fst) : fst(std::forward<T1>(fst)) {}
 		inline unsigned int size() const {
-			if constexpr(std::is_scalar<T1>::value) {
+			if constexpr(Scal1) {
 				return -1;
 			}
 			else return fst.size();
@@ -104,7 +106,7 @@ namespace Lazy {
 			return res;
 		}
 		inline auto operator[](unsigned int i)const {
-			if constexpr(std::is_scalar<T1>::value) {
+			if constexpr(Scal1) {
 				return Op::op(fst);
 			}
 			else return Op::op(fst[i]);
@@ -115,15 +117,18 @@ namespace Lazy {
 	struct BinExpr {
 		const T1 fst;
 		const T2 snd;
+		static constexpr bool Scal1 = std::is_scalar_v<typename std::remove_reference<T1>::type>;
+		static constexpr bool Scal2 = std::is_scalar_v<typename std::remove_reference<T2>::type>;
+
 		BinExpr(T1&& fst, T2&& snd) : fst(std::forward<T1>(fst)), snd(std::forward<T2>(snd)) {}
 		inline unsigned int size() const {
-			if constexpr(std::is_scalar<T1>::value && std::is_scalar<T2>::value) {
+			if constexpr(Scal1 && Scal2) {
 				return -1;
 			}
-			else if constexpr(std::is_scalar<T1>::value) {
+			else if constexpr(Scal1) {
 				return snd.size();
 			}
-			else if constexpr(std::is_scalar<T2>::value) {
+			else if constexpr(Scal2) {
 				return fst.size();
 			}
 			else return min(fst.size(), snd.size());
@@ -131,7 +136,6 @@ namespace Lazy {
 
 		template <NotInit Tres>
 		inline operator Tres() const {
-
 			unsigned int sz = size() == -1 ? 1 : size();
 			auto res = Tres(sz);
 			for(unsigned int i = 0; i < sz; i++) {
@@ -141,13 +145,13 @@ namespace Lazy {
 		}
 
 		inline auto operator[](unsigned int i)const {
-			if constexpr(std::is_scalar<T1>::value && std::is_scalar<T2>::value) {
+			if constexpr(Scal1 && Scal2) {
 				return Op::op(fst, snd);
 			}
-			else if constexpr(std::is_scalar<T1>::value) {
+			else if constexpr(Scal1) {
 				return Op::op(fst, snd[i]);
 			}
-			else if constexpr(std::is_scalar<T2>::value) {
+			else if constexpr(Scal2) {
 				return Op::op(fst[i], snd);
 			}
 			else return Op::op(fst[i], snd[i]);
