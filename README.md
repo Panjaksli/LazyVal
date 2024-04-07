@@ -1,7 +1,7 @@
 # LazyVal
-Single header lazy evaluation interface for vector type classes in C++
-## What this does ?
-1) Do straightforward arithmetic operations with vector types (class only needs size() and operator[]) using operator overloading (+,-,*,/)
+Header only lazy evaluation interface for vector type classes in C++
+## What can this do ?
+1) Do straightforward arithmetic operations with vector types (class only needs constructor(size), size() and operator[] methods) using operator overloading (+,-,*,/)
 2) Lazy evaluate only the needed results (no internal caching). Other than that, you can chain expresssions to your liking, without any additional runtime cost !
 Here is example of what you can do:
 ```cpp
@@ -15,5 +15,10 @@ std::cout << t[4];
 // Evaluate the whole vector, use this if you need to cache/get all the results.
 std::vector<float> v = t;
 ```
+## Basics
+The return size is always equal to the smallest vector in whole expression tree. Scalars are applied to all elements, but don't affect the resulting size.
+For forced evaluation or conversion, please use either conversion operator or eval<T>() member method.
+If you want to apply a lambda over 1 - 3 operands, use map() functions.
+Ternary operator is possible using cond() function.
 ## Requirements
-Needs C++20, because of the single concept that is used to make vector assignments work... If you are having issues, please remove the concept NotInit from conversion operators and replace simply with typename.
+Works with C++17 and GCC, Clang. (Maybe MSVC too...)
