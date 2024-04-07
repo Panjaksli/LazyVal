@@ -16,7 +16,7 @@ std::cout << t[4];
 std::vector<float> v = t;
 ```
 ## Basics
-The size is always equal to the smallest vector in the whole expression tree. Scalars are applied to all elements, but don't affect the resulting size.  
+The size is always equal to the smallest vector in the whole expression tree. Scalars apply to all elements, but don't affect the size.  
 For forced evaluation or conversion, please use either conversion operator or eval<T>() member method.  
 If you want to apply a lambda over 1 - 3 operands, use map() functions.  
 Ternary operator is possible using cond() function.  
