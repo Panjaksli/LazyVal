@@ -1,5 +1,5 @@
 # LazyVal
-Header only lazy evaluation interface for vector type classes in C++
+Header only expression template interface for vector types in C++.
 ## What can this do ?
 1) Do straightforward arithmetic operations with vector types (class only needs constructor(size), size() and operator[] methods) using operator overloading (+,-,*,/)  
 2) Lazy evaluate only the needed results (no internal caching). Other than that, you can chain expresssions to your liking, without any additional runtime cost !  
