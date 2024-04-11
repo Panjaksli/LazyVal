@@ -20,7 +20,7 @@ namespace Lazy {
 		NaryExpr(Op&& op, Ts && ... _args) : args(std::forward<Ts>(_args)...), op(std::forward<Op>(op)) {}
 
 		inline size_t size() const {
-			const auto call = [](Ts const& ... arg) { return std::min(size_wrapper(arg)...); };
+			const auto call = [](Ts const& ... arg) { return std::min({size_wrapper(arg)...}); };
 			return std::apply(call, args);
 		}
 
