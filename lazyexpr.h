@@ -38,7 +38,7 @@ namespace Lazy {
 		}
 
 		inline auto operator[](size_t i)const {
-			const auto call = [this, i](Ts const& ... arg) { return op(index_wrapper(arg, i)...); };
+			const auto call = [op = this->op, i](Ts const& ... arg) { return op(index_wrapper(arg, i)...); };
 			return std::apply(call, args);
 		}
 
