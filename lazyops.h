@@ -14,6 +14,7 @@ namespace Lazy{
 			return std::min(std::max(e1, T1(e2)), T1(e3));
 		}
 	};
+
 	// Binary ops
 	struct OpMul {
 		template <typename T1, typename T2>
@@ -93,7 +94,6 @@ namespace Lazy{
 			return std::pow(e1, e2);
 		}
 	};
-
 
 	// Unary ops
 	struct OpNeg {
